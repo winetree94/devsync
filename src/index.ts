@@ -1,3 +1,3 @@
-console.log(1);
+import path from "path";
 
-console.log(2);
+console.log(path);
