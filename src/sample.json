@@ -1,0 +1,10 @@
+{
+  "neovim": {
+    "configs": [
+      {
+        "source": "./index.ts",
+        "target": "./index.lua"
+      }
+    ]
+  }
+}
