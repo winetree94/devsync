@@ -1,5 +1,7 @@
 // import path from "path";
-import { symlink, access } from "fs";
+import { symlink, access, chmod, constants } from "fs";
+
+const permissions = constants.S_IRUSR | constants.S_IWUSR; // 읽기 및 쓰기 권한 부여
 
 interface DevsyncConfig {
   configs: DevsyncMappingConfig[];
@@ -61,27 +63,54 @@ const accessAsync = (path: string) => {
   });
 };
 
+// chmod async
+const chmodAsync = (path: string, mode: number) => {
+  return new Promise<void>((resolve, reject) => {
+    chmod(path, mode, (err) => {
+      if (err) {
+        reject(err);
+      }
+      resolve();
+    });
+  });
+};
+
 (async () => {
-  const filtered = Promise.all(
-    samples.map((config) => {
-      return config.configs.map((mapping) => {
-        return accessAsync(mapping.source).then(
-          () => mapping,
-          (err) => {
-            console.error(`Error: ${err}`);
-            return null;
-          },
-        );
-      });
+  const filtered = await Promise.all(
+    samples.map(async (config) => {
+      const results = await Promise.all(
+        config.configs.map(async (mapping) => {
+          try {
+            await Promise.all([
+              accessAsync(mapping.source),
+              accessAsync(mapping.target),
+            ]);
+            return true;
+          } catch (e) {
+            return false;
+          }
+        }),
+      );
+
+      return {
+        ...config,
+        configs: config.configs.filter((_, index) => {
+          return results[index];
+        }),
+      };
     }),
   );
+
+  console.log(filtered);
 
   // create synclink
   await Promise.all(
     // filter if target exist
     filtered.map((config) => {
-      return config.configs.map((mapping) => {
-        return symlinkAsync(mapping.source, mapping.target);
+      return config.configs.map(async (mapping) => {
+        return symlinkAsync(mapping.source, mapping.target).then(() =>
+          chmodAsync(mapping.target, permissions),
+        );
       });
     }),
   );
