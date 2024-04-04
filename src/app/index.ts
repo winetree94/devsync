@@ -1,6 +1,7 @@
 import {
   abs,
   accessAsync,
+  mkdirAsync,
   returnFalse,
   returnTrue,
   rmAsync,
@@ -128,6 +129,13 @@ export const run = async (config: DevsyncConfigs) => {
     // filter if target exist
     filtered.map((app) => {
       return app.configs?.map(async (mapping, index) => {
+        const lastTargetPath = mapping.target.split("/").slice(0, -1).join("/");
+        const targetDirExist = await accessAsync(abs(lastTargetPath))
+          .then(returnTrue)
+          .catch(returnFalse);
+        if (!targetDirExist) {
+          await mkdirAsync(abs(lastTargetPath), { recursive: true });
+        }
         console.log(
           `${app.appName}.configs[${index}]: create symlink to ${abs(mapping.target)}`,
         );
