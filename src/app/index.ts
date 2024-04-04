@@ -36,9 +36,9 @@ export const run = async (config: DevsyncConfigs) => {
     config.apps.map(async (app) => {
       const results = await Promise.all(
         app.files?.map(async (mapping) => {
-          const sourceExist = await accessAsync(abs(mapping.source)).then(
-            returnTrue,
-          );
+          const sourceExist = await accessAsync(abs(mapping.source))
+            .then(returnTrue)
+            .catch(returnFalse);
 
           const targetExist = await accessAsync(abs(mapping.target))
             .then(returnTrue)
