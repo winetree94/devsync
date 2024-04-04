@@ -1,6 +1,6 @@
 // import path from "path";
 import { homedir } from "os";
-import { link, access, constants } from "fs";
+import { symlink, access, constants } from "fs";
 
 const permissions = constants.S_IRUSR | constants.S_IWUSR; // 읽기 및 쓰기 권한 부여
 
@@ -52,7 +52,7 @@ const promisify = (fn: Function) => {
 };
 
 // symlink async
-const linkAsync = promisify(link);
+const linkAsync = promisify(symlink);
 
 // access async
 const accessAsync = promisify(access);
