@@ -52,6 +52,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@kwsites/file-exists@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@kwsites/file-exists@npm:1.1.1"
+  dependencies:
+    debug: "npm:^4.1.1"
+  checksum: 10c0/39e693239a72ccd8408bb618a0200e4a8d61682057ca7ae2c87668d7e69196e8d7e2c9cde73db6b23b3b0230169a15e5f1bfe086539f4be43e767b2db68e8ee4
+  languageName: node
+  linkType: hard
+
+"@kwsites/promise-deferred@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@kwsites/promise-deferred@npm:1.1.1"
+  checksum: 10c0/ef1ad3f1f50991e3bed352b175986d8b4bc684521698514a2ed63c1d1fc9848843da4f2bc2df961c9b148c94e1c34bf33f0da8a90ba2234e452481f2cc9937b1
+  languageName: node
+  linkType: hard
+
 "@npmcli/agent@npm:^2.0.0":
   version: 2.2.2
   resolution: "@npmcli/agent@npm:2.2.2"
@@ -357,7 +373,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4, debug@npm:^4.3.4":
+"debug@npm:4, debug@npm:^4, debug@npm:^4.1.1, debug@npm:^4.3.4":
   version: 4.3.4
   resolution: "debug@npm:4.3.4"
   dependencies:
@@ -376,7 +392,9 @@ __metadata:
     "@types/node": "npm:20.11.25"
     commander: "npm:^12.0.0"
     nodemon: "npm:^3.1.0"
+    simple-git: "npm:^3.24.0"
     ts-node: "npm:^10.9.2"
+    tsconfig-paths: "npm:^4.2.0"
     typescript: "npm:^5.4.3"
   languageName: unknown
   linkType: soft
@@ -680,6 +698,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"json5@npm:^2.2.2":
+  version: 2.2.3
+  resolution: "json5@npm:2.2.3"
+  bin:
+    json5: lib/cli.js
+  checksum: 10c0/5a04eed94810fa55c5ea138b2f7a5c12b97c3750bc63d11e511dcecbfef758003861522a070c2272764ee0f4e3e323862f386945aeb5b85b87ee43f084ba586c
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^10.0.1, lru-cache@npm:^10.2.0":
   version: 10.2.0
   resolution: "lru-cache@npm:10.2.0"
@@ -737,6 +764,13 @@ __metadata:
   dependencies:
     brace-expansion: "npm:^2.0.1"
   checksum: 10c0/2c16f21f50e64922864e560ff97c587d15fd491f65d92a677a344e970fe62aafdbeafe648965fa96d33c061b4d0eabfe0213466203dd793367e7f28658cf6414
+  languageName: node
+  linkType: hard
+
+"minimist@npm:^1.2.6":
+  version: 1.2.8
+  resolution: "minimist@npm:1.2.8"
+  checksum: 10c0/19d3fcdca050087b84c2029841a093691a91259a47def2f18222f41e7645a0b7c44ef4b40e88a1e58a40c84d2ef0ee6047c55594d298146d0eb3f6b737c20ce6
   languageName: node
   linkType: hard
 
@@ -1030,6 +1064,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"simple-git@npm:^3.24.0":
+  version: 3.24.0
+  resolution: "simple-git@npm:3.24.0"
+  dependencies:
+    "@kwsites/file-exists": "npm:^1.1.1"
+    "@kwsites/promise-deferred": "npm:^1.1.1"
+    debug: "npm:^4.3.4"
+  checksum: 10c0/4329e5be1a7af1ebb476354ed6edf6d2828dc221e15d22ce3e5e8028f537d5e9ac059d813911516f78e22dfa2ee4db4c8cf30bf912bd284e530b733bd6b5c3a0
+  languageName: node
+  linkType: hard
+
 "simple-update-notifier@npm:^2.0.0":
   version: 2.0.0
   resolution: "simple-update-notifier@npm:2.0.0"
@@ -1123,6 +1168,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"strip-bom@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "strip-bom@npm:3.0.0"
+  checksum: 10c0/51201f50e021ef16672593d7434ca239441b7b760e905d9f33df6e4f3954ff54ec0e0a06f100d028af0982d6f25c35cd5cda2ce34eaebccd0250b8befb90d8f1
+  languageName: node
+  linkType: hard
+
 "supports-color@npm:^5.5.0":
   version: 5.5.0
   resolution: "supports-color@npm:5.5.0"
@@ -1201,6 +1253,17 @@ __metadata:
     ts-node-transpile-only: dist/bin-transpile.js
     ts-script: dist/bin-script-deprecated.js
   checksum: 10c0/5f29938489f96982a25ba650b64218e83a3357d76f7bede80195c65ab44ad279c8357264639b7abdd5d7e75fc269a83daa0e9c62fd8637a3def67254ecc9ddc2
+  languageName: node
+  linkType: hard
+
+"tsconfig-paths@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "tsconfig-paths@npm:4.2.0"
+  dependencies:
+    json5: "npm:^2.2.2"
+    minimist: "npm:^1.2.6"
+    strip-bom: "npm:^3.0.0"
+  checksum: 10c0/09a5877402d082bb1134930c10249edeebc0211f36150c35e1c542e5b91f1047b1ccf7da1e59babca1ef1f014c525510f4f870de7c9bda470c73bb4e2721b3ea
   languageName: node
   linkType: hard
 
