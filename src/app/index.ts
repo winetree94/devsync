@@ -22,7 +22,7 @@ export interface DevSyncGitconfigs {
 export interface DevSyncAppConfig {
   appName: string;
   git?: DevSyncGitconfigs[];
-  files: DevSyncFileConfig[];
+  files?: DevSyncFileConfig[];
 }
 
 export interface DevSyncFileConfig {
@@ -35,7 +35,7 @@ export const run = async (config: DevsyncConfigs) => {
   const filtered = await Promise.all(
     config.apps.map(async (app) => {
       const results = await Promise.all(
-        app.files.map(async (mapping) => {
+        app.files?.map(async (mapping) => {
           const sourceExist = await accessAsync(abs(mapping.source)).then(
             returnTrue,
           );
@@ -46,16 +46,16 @@ export const run = async (config: DevsyncConfigs) => {
 
           if (targetExist) {
             console.warn(mapping.source, "Target exist, removing target");
-            await rmAsync(abs(mapping.target));
+            await rmAsync(abs(mapping.target), { recursive: true });
           }
 
           return sourceExist;
-        }),
+        }) || [],
       );
 
       return {
         ...app,
-        configs: app.files.filter((_, index) => {
+        configs: app.files?.filter((_, index) => {
           return results[index];
         }),
       };
@@ -127,7 +127,7 @@ export const run = async (config: DevsyncConfigs) => {
   await Promise.all(
     // filter if target exist
     filtered.map((app) => {
-      return app.configs.map(async (mapping, index) => {
+      return app.configs?.map(async (mapping, index) => {
         console.log(
           `${app.appName}.configs[${index}]: create symlink to ${abs(mapping.target)}`,
         );
