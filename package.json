@@ -2,8 +2,8 @@
   "name": "devsync",
   "scripts": {
     "dev": "nodemon --exec ts-node src/user/index.ts",
-    "start": "ts-node src/user/index.ts -v",
-    "build": "tsc"
+    "winetree94": "ts-node src/user/winetree94.ts",
+    "ila": "ts-node src/user/ila.ts"
   },
   "dependency": {},
   "dependencies": {
