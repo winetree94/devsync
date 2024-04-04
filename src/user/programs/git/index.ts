@@ -1,8 +1,8 @@
-import { DevsyncAppConfig } from "@/app";
+import { DevSyncAppConfig } from "@/app";
 
-export const GitConfig: DevsyncAppConfig = {
+export const GitConfig: DevSyncAppConfig = {
   appName: "git",
-  configs: [
+  files: [
     {
       source: "./src/user/programs/git/.gitconfig",
       target: "~/.gitconfig",

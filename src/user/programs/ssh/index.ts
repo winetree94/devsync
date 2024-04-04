@@ -1,8 +1,8 @@
-import { DevsyncAppConfig } from "@/app";
+import { DevSyncAppConfig } from "@/app";
 
-export const SSHConfig: DevsyncAppConfig = {
+export const SSHConfig: DevSyncAppConfig = {
   appName: "ssh",
-  configs: [
+  files: [
     {
       permission: 0o600,
       source: "./src/user/programs/ssh/config",
