@@ -6,7 +6,7 @@ export const TmuxConfig: DevSyncAppConfig = {
     {
       owner: "tmux-plugins",
       repo: "tpm",
-      // rev: "99469c4a9b1ccf77fade25842dc7bafbc8ce9946",
+      rev: "99469c4a9b1ccf77fade25842dc7bafbc8ce9946",
       path: "~/.tmux/plugins/tpm",
     },
   ],
