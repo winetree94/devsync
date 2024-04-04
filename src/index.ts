@@ -1,17 +1,15 @@
 // import path from "path";
-import { homedir } from "os";
-import { symlink, access, constants, rm } from "fs";
-import path from "path";
+import fs from "fs";
+import { abs, accessAsync, rmAsync, symlinkAsync } from "./utils";
 
-const permissions = constants.S_IRUSR | constants.S_IWUSR; // 읽기 및 쓰기 권한 부여
-
-console.log(permissions);
+const permissions = fs.constants.S_IRUSR | fs.constants.S_IWUSR; // 읽기 및 쓰기 권한 부여
 
 interface DevsyncConfig {
   configs: DevsyncMappingConfig[];
 }
 
 interface DevsyncMappingConfig {
+  permission: number;
   source: string;
   target: string;
 }
@@ -28,6 +26,7 @@ const samples: DevsyncConfig[] = [
   {
     configs: [
       {
+        permission: 0o600,
         source: "./configs/ssh/config",
         target: "~/.ssh/config",
       },
@@ -35,50 +34,21 @@ const samples: DevsyncConfig[] = [
   },
 ];
 
-const homePathToAbsolutePath = (path: string) => {
-  return path.replace("~", homedir());
-};
-
-const abs = (strPath: string) => {
-  return path.resolve(strPath.replace("~", homedir()));
-};
-
-const promisify = (fn: Function) => {
-  return (...args: any[]) => {
-    return new Promise((resolve, reject) => {
-      fn(...args, (err: any, ...results: any[]) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(results);
-      });
-    });
-  };
-};
-
-// symlink async
-const symlinkAsync = promisify(symlink);
-
-// access async
-const accessAsync = promisify(access);
-
-// rm async
-const rmAsync = promisify(rm);
-
 (async () => {
   const filtered = await Promise.all(
     samples.map(async (app) => {
       const results = await Promise.all(
         app.configs.map(async (mapping) => {
-          const sourceExist = await accessAsync(abs(mapping.source))
-            .then(() => true)
-            .catch(() => null);
+          const sourceExist = await accessAsync(abs(mapping.source)).then(
+            () => true,
+          );
 
           const targetExist = await accessAsync(abs(mapping.target))
             .then(() => true)
             .catch(() => null);
 
           if (targetExist) {
+            console.warn("Target exist, removing target");
             await rmAsync(abs(mapping.target));
           }
 
@@ -100,7 +70,7 @@ const rmAsync = promisify(rm);
     // filter if target exist
     filtered.map((config) => {
       return config.configs.map(async (mapping) => {
-        return symlinkAsync(abs(mapping.source), abs(mapping.target)); //.then(() => chmodAsync(homePathToAbsolutePath(mapping.target), 0x600));
+        return symlinkAsync(abs(mapping.source), abs(mapping.target));
       });
     }),
   );
