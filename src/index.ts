@@ -1,7 +1,10 @@
 // import path from "path";
-import { symlink, access, chmod, constants } from "fs";
+import { homedir } from "os";
+import { link, access, constants } from "fs";
 
 const permissions = constants.S_IRUSR | constants.S_IWUSR; // 읽기 및 쓰기 권한 부여
+
+console.log(permissions);
 
 interface DevsyncConfig {
   configs: DevsyncMappingConfig[];
@@ -13,88 +16,74 @@ interface DevsyncMappingConfig {
 }
 
 const samples: DevsyncConfig[] = [
+  // {
+  //   configs: [
+  //     {
+  //       source: "./test/sample.txt",
+  //       target: "./test/sample-link.txt",
+  //     },
+  //   ],
+  // },
   {
     configs: [
       {
-        source: "./test/sample.txt",
-        target: "./test/sample-link.txt",
+        source: "./configs/ssh/config",
+        target: "./config",
       },
     ],
   },
-  // {
-  //   configs: [
-  //     {
-  //       source: "./index.ts",
-  //       target: "./index.lua",
-  //     },
-  //   ],
-  // },
-  // {
-  //   configs: [
-  //     {
-  //       source: "./tmux.conf",
-  //       target: "~/.tmux.conf",
-  //     },
-  //   ],
-  // },
 ];
 
-// symlink async
-const symlinkAsync = (source: string, target: string) => {
-  return new Promise<void>((resolve, reject) => {
-    symlink(source, target, (err) => {
-      if (err) {
-        reject(err);
-      }
-      resolve();
-    });
-  });
+const homePathToAbsolutePath = (path: string) => {
+  return path.replace("~", homedir());
 };
+
+const promisify = (fn: Function) => {
+  return (...args: any[]) => {
+    return new Promise((resolve, reject) => {
+      fn(...args, (err: any, ...results: any[]) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(results);
+      });
+    });
+  };
+};
+
+// symlink async
+const linkAsync = promisify(link);
 
 // access async
-const accessAsync = (path: string) => {
-  return new Promise<void>((resolve, reject) => {
-    access(path, (err) => {
-      if (err) {
-        reject(err);
-      }
-      resolve();
-    });
-  });
-};
+const accessAsync = promisify(access);
 
 // chmod async
-const chmodAsync = (path: string, mode: number) => {
-  return new Promise<void>((resolve, reject) => {
-    chmod(path, mode, (err) => {
-      if (err) {
-        reject(err);
-      }
-      resolve();
-    });
-  });
-};
+// const chmodAsync = promisify(chmod);
 
 (async () => {
   const filtered = await Promise.all(
-    samples.map(async (config) => {
+    samples.map(async (app) => {
       const results = await Promise.all(
-        config.configs.map(async (mapping) => {
-          try {
-            await Promise.all([
-              accessAsync(mapping.source),
-              accessAsync(mapping.target),
-            ]);
-            return true;
-          } catch (e) {
-            return false;
-          }
+        app.configs.map(async (mapping) => {
+          const sourceExist = await accessAsync(
+            homePathToAbsolutePath(mapping.source),
+          )
+            .then(() => true)
+            .catch(() => null);
+
+          const targetExist = await accessAsync(
+            homePathToAbsolutePath(mapping.target),
+          )
+            .then(() => true)
+            .catch(() => null);
+
+          return sourceExist && !targetExist;
         }),
       );
 
       return {
-        ...config,
-        configs: config.configs.filter((_, index) => {
+        ...app,
+        configs: app.configs.filter((_, index) => {
           return results[index];
         }),
       };
@@ -108,15 +97,17 @@ const chmodAsync = (path: string, mode: number) => {
     // filter if target exist
     filtered.map((config) => {
       return config.configs.map(async (mapping) => {
-        return symlinkAsync(mapping.source, mapping.target).then(() =>
-          chmodAsync(mapping.target, permissions),
-        );
+        return linkAsync(
+          homePathToAbsolutePath(mapping.source),
+          homePathToAbsolutePath(mapping.target),
+        ); //.then(() => chmodAsync(homePathToAbsolutePath(mapping.target), 0x600));
       });
     }),
   );
 })();
 
 console.log(samples);
+
 console.log(process.cwd());
 
 // program

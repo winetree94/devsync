@@ -1,1 +1,1 @@
-./test/sample.txt
+hello world
