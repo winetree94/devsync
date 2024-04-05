@@ -9,6 +9,8 @@ import {
 } from './utils';
 import simpleGit from 'simple-git';
 
+export * from './utils';
+
 export interface DevsyncConfigs {
   apps: DevSyncAppConfig[];
 }

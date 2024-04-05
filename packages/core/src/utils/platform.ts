@@ -15,27 +15,27 @@ export interface PlatformSwitchOptions<T> {
 
 export const platformSwitch = <T>(chooseType: PlatformSwitchOptions<T>): T => {
   switch (process.platform) {
-    case "aix":
+    case 'aix':
       return chooseType.aix ?? chooseType.default;
-    case "android":
+    case 'android':
       return chooseType.android ?? chooseType.default;
-    case "darwin":
+    case 'darwin':
       return chooseType.darwin ?? chooseType.default;
-    case "freebsd":
+    case 'freebsd':
       return chooseType.freebsd ?? chooseType.default;
-    case "haiku":
+    case 'haiku':
       return chooseType.haiku ?? chooseType.default;
-    case "linux":
+    case 'linux':
       return chooseType.linux ?? chooseType.default;
-    case "openbsd":
+    case 'openbsd':
       return chooseType.openbsd ?? chooseType.default;
-    case "sunos":
+    case 'sunos':
       return chooseType.sunos ?? chooseType.default;
-    case "win32":
+    case 'win32':
       return chooseType.win32 ?? chooseType.default;
-    case "cygwin":
+    case 'cygwin':
       return chooseType.cygwin ?? chooseType.default;
-    case "netbsd":
+    case 'netbsd':
       return chooseType.netbsd ?? chooseType.default;
     default:
       return chooseType.default;
@@ -59,27 +59,27 @@ export interface ArchSwitchOptions<T> {
 
 export const archSwitch = <T>(chooseType: ArchSwitchOptions<T>): T => {
   switch (process.arch) {
-    case "arm":
+    case 'arm':
       return chooseType.arm ?? chooseType.default;
-    case "arm64":
+    case 'arm64':
       return chooseType.arm64 ?? chooseType.default;
-    case "ia32":
+    case 'ia32':
       return chooseType.ia32 ?? chooseType.default;
-    case "mips":
+    case 'mips':
       return chooseType.mips ?? chooseType.default;
-    case "mipsel":
+    case 'mipsel':
       return chooseType.mipsel ?? chooseType.default;
-    case "ppc":
+    case 'ppc':
       return chooseType.ppc ?? chooseType.default;
-    case "ppc64":
+    case 'ppc64':
       return chooseType.ppc64 ?? chooseType.default;
-    case "riscv64":
+    case 'riscv64':
       return chooseType.risccv64 ?? chooseType.default;
-    case "s390":
+    case 's390':
       return chooseType.s390 ?? chooseType.default;
-    case "s390x":
+    case 's390x':
       return chooseType.s390x ?? chooseType.default;
-    case "x64":
+    case 'x64':
       return chooseType.x64 ?? chooseType.default;
     default:
       return chooseType.default;

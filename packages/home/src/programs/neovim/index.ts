@@ -1,14 +1,13 @@
-import { DevSyncAppConfig } from "@/app";
-import { platformSwitch } from "@/app/utils";
+import { DevSyncAppConfig, platformSwitch } from '@devsynk/core';
 
 export const NeovimConfig: DevSyncAppConfig = {
-  appName: "neovim",
+  appName: 'neovim',
   files: [
     {
-      source: "./src/user/programs/neovim/nvim",
+      source: './src/programs/neovim/nvim',
       target: platformSwitch({
-        win32: "~\\AppData\\Local\\nvim",
-        default: "~/.config/nvim",
+        win32: '~\\AppData\\Local\\nvim',
+        default: '~/.config/nvim',
       }),
     },
   ],
