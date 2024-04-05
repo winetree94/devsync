@@ -3,8 +3,8 @@
   "scripts": {
     "dev": "nodemon --exec ts-node src/user/index.ts",
     "default": "ts-node src/user/index.ts",
-    "winetree94": "ts-node src/user/winetree94.ts",
-    "ila": "ts-node src/user/ila.ts"
+    "winetree94": "ts-node src/user/index.ts --profile=winetree94",
+    "ila": "ts-node src/user/index.ts --profile=ila"
   },
   "dependency": {},
   "dependencies": {
