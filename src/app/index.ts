@@ -36,21 +36,36 @@ export const run = async (config: DevsyncConfigs) => {
   const filtered = await Promise.all(
     config.apps.map(async (app) => {
       const results = await Promise.all(
-        app.files?.map(async (mapping) => {
-          const sourceExist = await accessAsync(abs(mapping.source))
+        app.files?.map(async (file, index) => {
+          console.log(
+            `${app.appName}.files[${index}]: checking`,
+          );
+          await accessAsync(abs(file.source)).then(returnTrue);
+
+          const targetExist = await accessAsync(abs(file.target))
             .then(returnTrue)
             .catch(returnFalse);
 
-          const targetExist = await accessAsync(abs(mapping.target))
-            .then(returnTrue)
-            .catch(returnFalse);
-
-          if (targetExist) {
-            console.warn(mapping.source, "Target exist, removing target");
-            await rmAsync(abs(mapping.target), { recursive: true });
+          if (!targetExist) {
+            console.log(`${app.appName}.files[${index}]: target not exist`);
+            const lastTargetPath = file.target.split("/").slice(0, -1).join("/");
+            const targetDirExist = await accessAsync(abs(lastTargetPath))
+              .then(returnTrue)
+              .catch(returnFalse);
+            if (!targetDirExist) {
+              console.log(`${app.appName}.files[${index}]: create target directory`);
+              await mkdirAsync(abs(lastTargetPath), { recursive: true });
+            }
+            console.log(`${app.appName}.files[${index}]: create symlink to ${abs(file.target)}`);
+            await symlinkAsync(abs(file.source), abs(file.target));
+            return;
           }
 
-          return sourceExist;
+          console.log(`${app.appName}.files[${index}]: target exist`);
+          console.log(`${app.appName}.files[${index}]: removing target`);
+          await rmAsync(abs(file.target), { recursive: true });
+          console.log(`${app.appName}.files[${index}]: create symlink to ${abs(file.target)}`);
+          await symlinkAsync(abs(file.source), abs(file.target));
         }) || [],
       );
 
@@ -121,26 +136,6 @@ export const run = async (config: DevsyncConfigs) => {
           await git.pull();
         }) || [],
       );
-    }),
-  );
-
-  // create synclink
-  await Promise.all(
-    // filter if target exist
-    filtered.map((app) => {
-      return app.configs?.map(async (mapping, index) => {
-        const lastTargetPath = mapping.target.split("/").slice(0, -1).join("/");
-        const targetDirExist = await accessAsync(abs(lastTargetPath))
-          .then(returnTrue)
-          .catch(returnFalse);
-        if (!targetDirExist) {
-          await mkdirAsync(abs(lastTargetPath), { recursive: true });
-        }
-        console.log(
-          `${app.appName}.configs[${index}]: create symlink to ${abs(mapping.target)}`,
-        );
-        await symlinkAsync(abs(mapping.source), abs(mapping.target));
-      });
     }),
   );
 };
