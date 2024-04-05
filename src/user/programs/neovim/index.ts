@@ -13,3 +13,10 @@ export const NeovimConfig: DevSyncAppConfig = {
     },
   ],
 };
+
+// export const B = {
+//   binary: platformSwitch({
+//     win32: Winget('neovim.neovim'),
+//     darwin: Brew('neovim'),
+//   }),
+// }
