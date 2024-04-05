@@ -12,7 +12,6 @@ export const TmuxConfig: DevSyncAppConfig = {
   ],
   files: [
     {
-      permission: 0o644,
       source: "./src/user/programs/tmux/.tmux.conf",
       target: "~/.tmux.conf",
     },
