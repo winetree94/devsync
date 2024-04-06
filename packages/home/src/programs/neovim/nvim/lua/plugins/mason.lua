@@ -27,6 +27,11 @@ return {
   {
     "jay-babu/mason-null-ls.nvim",
     opts = {
+      ensure_installed = {
+        "prettier",
+        "prettierd",
+        "eslint",
+      },
       handlers = {
         -- for prettier
         prettier = function()
@@ -50,9 +55,9 @@ return {
             end,
           })
         end,
-        -- For eslint_d:
-        eslint_d = function()
-          require("null-ls").register(require("null-ls").builtins.diagnostics.eslint_d.with {
+        -- For eslint:
+        eslint = function()
+          require("null-ls").register(require("null-ls").builtins.diagnostics.eslint.with {
             condition = function(utils)
               return utils.root_has_file "package.json"
                 or utils.root_has_file ".eslintrc.json"
