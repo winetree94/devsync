@@ -1,3 +1,4 @@
+import { execSync } from 'child_process';
 import {
   abs,
   accessAsync,
@@ -22,8 +23,13 @@ export interface DevSyncGitconfigs {
   path: string;
 }
 
+export interface DevSyncPackageDefinition {
+  packageName: string;
+}
+
 export interface DevSyncAppConfig {
   appName: string;
+  packages?: (DevSyncPackageDefinition | string)[];
   git?: DevSyncGitconfigs[];
   files?: DevSyncFileConfig[];
 }
@@ -34,8 +40,30 @@ export interface DevSyncFileConfig {
   target: string;
 }
 
+const convertToDevSyncPackageDefinition = (
+  packageName: string | DevSyncPackageDefinition,
+): DevSyncPackageDefinition => {
+  if (typeof packageName === 'string') {
+    return {
+      packageName,
+    };
+  }
+  return packageName;
+};
+
 export const run = async (config: DevsyncConfigs) => {
-  const filtered = await Promise.all(
+  config.apps.forEach((app) => {
+    const packages = app.packages?.map(convertToDevSyncPackageDefinition) || [];
+    const packageNames = packages.map((pkg) => pkg.packageName);
+    if (!packageNames.length) {
+      return;
+    }
+    const command = `brew install ${packageNames.join(' ')}`;
+    console.log(command);
+    execSync(command);
+  });
+
+  await Promise.all(
     config.apps.map(async (app) => {
       const results = await Promise.all(
         app.files?.map(async (file, index) => {
@@ -91,7 +119,7 @@ export const run = async (config: DevsyncConfigs) => {
   );
 
   await Promise.all(
-    filtered.map(async (app) => {
+    config.apps.map(async (app) => {
       await Promise.all(
         app.git?.map(async (gitConfig, index) => {
           const exist = await accessAsync(abs(gitConfig.path))
@@ -139,11 +167,11 @@ export const run = async (config: DevsyncConfigs) => {
           }
 
           const branchOutput = (await git.remote(['show', 'origin'])) as string;
-          const defaultBranch = branchOutput.match(/HEAD branch: (\S+)/)?.[1]!;
+          const defaultBranch = branchOutput.match(/HEAD branch: (\S+)/)?.[1];
           console.log(
             `${app.appName}.git[${index}]: checkout - default branch - ${defaultBranch}`,
           );
-          await git.checkout(defaultBranch);
+          await git.checkout(defaultBranch!);
           console.log(`${app.appName}.git[${index}]: git pull`);
           await git.pull();
         }) || [],
