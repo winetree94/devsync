@@ -3,3 +3,5 @@
 	email = winetree94@gmail.com
 	username = winetree94
 
+[pull]
+	rebase = true
