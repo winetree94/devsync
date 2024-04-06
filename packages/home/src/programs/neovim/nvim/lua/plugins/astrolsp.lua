@@ -4,6 +4,7 @@ return {
   ---@type AstroLSPOpts
   opts = {
     formatting = {
+      timeout_ms = 3000,
       disabled = {
         "lua_ls",
         "tsserver",

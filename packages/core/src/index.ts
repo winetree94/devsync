@@ -52,32 +52,32 @@ const convertToDevSyncPackageDefinition = (
 };
 
 export const run = async (config: DevsyncConfigs) => {
-  await Promise.all(
-    config.apps.map(
-      (app) =>
-        new Promise((resolve, reject) => {
-          const packages =
-            app.packages?.map(convertToDevSyncPackageDefinition) || [];
-          const packageNames = packages.map((pkg) => pkg.packageName);
-          if (!packageNames.length) {
-            return;
-          }
-          const command = `brew install ${packageNames.join(' ')}`;
-          console.log(command);
+  // await Promise.all(
+  //   config.apps.map(
+  //     (app) =>
+  //       new Promise((resolve, reject) => {
+  //         const packages =
+  //           app.packages?.map(convertToDevSyncPackageDefinition) || [];
+  //         const packageNames = packages.map((pkg) => pkg.packageName);
+  //         if (!packageNames.length) {
+  //           return;
+  //         }
+  //         const command = `brew install ${packageNames.join(' ')}`;
+  //         console.log(command);
 
-          exec(command, (error, stdout, stderr) => {
-            if (error) {
-              console.error(`exec error: ${stdout}`);
-              console.error(`stderr: ${stderr}`);
-              reject(error);
-              return;
-            }
-            console.log(`stdout: ${stdout}`);
-            resolve(stdout);
-          });
-        }),
-    ),
-  );
+  //         exec(command, (error, stdout, stderr) => {
+  //           if (error) {
+  //             console.error(`exec error: ${stdout}`);
+  //             console.error(`stderr: ${stderr}`);
+  //             reject(error);
+  //             return;
+  //           }
+  //           console.log(`stdout: ${stdout}`);
+  //           resolve(stdout);
+  //         });
+  //       }),
+  //   ),
+  // );
 
   await Promise.all(
     config.apps.map(async (app) => {
