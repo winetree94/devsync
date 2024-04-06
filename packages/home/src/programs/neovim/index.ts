@@ -4,14 +4,29 @@ export const NeovimConfig: DevSyncAppConfig = {
   appName: 'neovim',
   packages: [
     platformSwitch({
-      win32: 'neovim',
+      win32: 'Neovim.Neovim',
       default: 'neovim',
     }),
-    'ripgrep',
-    'fd',
-    'gdu',
-    'bottom',
-    'lazygit',
+    platformSwitch({
+      win32: 'BurntSushi.ripgrep.GNU',
+      default: 'ripgrep',
+    }),
+    platformSwitch({
+      win32: 'sharkdp.fd',
+      default: 'fd',
+    }),
+    platformSwitch({
+      win32: 'dundee.gdu',
+      default: 'gdu',
+    }),
+    platformSwitch({
+      win32: 'Clement.bottom',
+      default: 'bottom',
+    }),
+    platformSwitch({
+      win32: 'JesseDuffield.lazygit',
+      default: 'lazygit',
+    }),
   ],
   files: [
     {

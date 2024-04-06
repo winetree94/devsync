@@ -1,5 +1,6 @@
 {
   "name": "@devsynk/core",
+  "version": "1.0.0",
   "scripts": {
     "dev": "nodemon --exec ts-node src/user/index.ts",
     "start": "ts-node src/user/index.ts"
