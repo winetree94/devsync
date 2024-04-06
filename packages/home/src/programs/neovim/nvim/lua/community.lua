@@ -1,7 +1,3 @@
--- AstroCommunity: import any community modules here
--- We import this file in `lazy_setup.lua` before the `plugins/` folder.
--- This guarantees that the specs are processed before any user plugins.
-
 ---@type LazySpec
 return {
   "AstroNvim/astrocommunity",
@@ -10,7 +6,6 @@ return {
   -- catppuccin theme
   { import = "astrocommunity.colorscheme.catppuccin" },
   { "catppuccin/nvim" },
-  -- copilot
   { import = "astrocommunity.completion.copilot-lua" },
   {
     "zbirenbaum/copilot.lua",
