@@ -29,7 +29,7 @@ return {
         "cssmodules_ls",
 
         -- nix
-        "nil_ls",
+        -- "nil_ls",
 
         -- add more arguments for adding more language servers
       })

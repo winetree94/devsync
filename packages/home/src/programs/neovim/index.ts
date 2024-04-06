@@ -10,6 +10,13 @@ export const NeovimConfig: DevSyncAppConfig = {
         default: '~/.config/nvim',
       }),
     },
+    // {
+    //   source: './src/programs/neovim/nvim',
+    //   target: platformSwitch({
+    //     win32: '~\\AppData\\Local\\nvim',
+    //     default: '~/.config/nvim',
+    //   }),
+    // },
   ],
 };
 
