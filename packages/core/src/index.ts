@@ -48,9 +48,9 @@ export const run = async (config: DevsyncConfigs) => {
 
           if (!targetExist) {
             console.log(`${app.appName}.files[${index}]: target not exist`);
-            await rmAsync(abs(file.target), { recursive: true }).then(
-              returnTrue,
-            );
+            await rmAsync(abs(file.target), { recursive: true })
+              .then(returnTrue)
+              .catch(returnFalse);
             const lastTargetPath = file.target
               .split('/')
               .slice(0, -1)
