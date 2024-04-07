@@ -20,6 +20,7 @@ return {
         "html",
         "cssls",
         "cssmodules_ls",
+        "rust_analyzer"
       })
     end,
   },
