@@ -1,7 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "start": "yarn workspace home start"
+    "start": "yarn workspace home start",
+    "start:winetree94": "yarn workspace home start --profile=winetree94",
+    "start:ila": "yarn workspace home start --profile=ila"
   },
   "workspaces": [
     "packages/*"
