@@ -8,5 +8,9 @@ export const ZSHConfig: DevSyncAppConfig = {
       source: './src/programs/zsh/.zshrc',
       target: '~/.zshrc',
     },
+    {
+      source: './src/programs/zsh/.zprofile',
+      target: '~/.zprofile',
+    },
   ],
 };
