@@ -57,4 +57,6 @@ export GTK_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 export DefaultIMModule=fcitx
 
-fcitx-autostart >/dev/null 2>&1
+if which fcitx-autostart > /dev/null 2>&1; then
+  fcitx-autostart >/dev/null 2>&1
+fi
