@@ -6,3 +6,6 @@
 	email = winetree94@gmail.com
 	username = winetree94
 
+[core]
+	eol = native
+	autocrlf = true
