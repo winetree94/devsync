@@ -8,4 +8,8 @@
 
 [core]
 	eol = native
-	autocrlf = true
+	autocrlf = input
+[color]
+	ui = auto
+[init]
+	defaultBranch = main
