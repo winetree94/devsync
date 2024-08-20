@@ -1,5 +1,10 @@
+OS_TYPE=$(uname)
+ARCH=$(arch)
+
 # register local bin
 export PATH=~/.local/bin:$PATH
+
+~/.zprofile.sh
 
 # load homebrew
 if [ -f /opt/homebrew/bin/brew ]; then
@@ -32,6 +37,18 @@ if [ -d "$VOLTA_HOME" ]; then
   export VOLTA_FEATURE_PNPM=1
   export PATH="$VOLTA_HOME/bin:$PATH"
 fi
+
+case "$OS_TYPE" in
+  Darwin)
+    echo "Darwin"
+    ;;
+  Linux)
+    echo "Linux"
+    ;;
+  *)
+    echo "Not supported: $OS_TYPE"
+    ;;
+esac
 
 # load nvm
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
