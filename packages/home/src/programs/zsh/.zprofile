@@ -1,6 +1,12 @@
 OS_TYPE=$(uname)
 ARCH=$(arch)
 
+if grep -qEi "(microsoft|wsl)" /proc/version; then
+    WSL=true
+else
+    WSL=false
+fi
+
 # register local bin
 export PATH=~/.local/bin:$PATH
 

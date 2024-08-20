@@ -21,5 +21,8 @@ export const ZSHConfig: DevSyncAppConfig = {
       target: '~/.zprofile.sh',
       permission: 0o755,
     },
+    ...platformSwitch({
+      default: [],
+    }),
   ],
 };
