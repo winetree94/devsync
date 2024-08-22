@@ -11,3 +11,7 @@ if [ -d "$ANDROID_HOME" ]; then
   export PATH=$PATH:$ANDROID_HOME/platform-tools
 fi
 
+export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/26.1.10909125
+if [ -d "$ANDROID_NDK_HOME" ]; then
+  export PATH=$PATH:$ANDROID_NDK_HOME
+fi
