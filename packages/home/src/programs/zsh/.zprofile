@@ -32,7 +32,7 @@ if which fcitx-autostart >/dev/null 2>&1; then
   fcitx-autostart >/dev/null 2>&1
 fi
 
-EMSDK_QUIET=1
+export EMSDK_QUIET=1
 
 if [ -f ~/GitPrograms/emsdk/emsdk_env.sh ]; then
   source "/home/winetree94/GitPrograms/emsdk/emsdk_env.sh"
