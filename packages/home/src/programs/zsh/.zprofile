@@ -23,10 +23,10 @@ elif [ -f /home/linuxbrew/.linuxbrew/bin/brew ]; then
 fi
 
 # WSLg 사용 시 fcitx 사용
-export QT_IM_MODULE=fcitx
-export GTK_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx
-export DefaultIMModule=fcitx
+# export QT_IM_MODULE=fcitx
+# export GTK_IM_MODULE=fcitx
+# export XMODIFIERS=@im=fcitx
+# export DefaultIMModule=fcitx
 
 if which fcitx-autostart >/dev/null 2>&1; then
   fcitx-autostart >/dev/null 2>&1
