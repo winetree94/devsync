@@ -73,6 +73,7 @@ ZSH_THEME="robbyrussell"
 plugins=(
  git
  command-not-found
+ zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
