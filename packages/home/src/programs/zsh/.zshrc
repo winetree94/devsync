@@ -77,3 +77,10 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+
+# bun completions
+[ -s "/Users/hansolpark/.bun/_bun" ] && source "/Users/hansolpark/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

@@ -47,6 +47,11 @@ if [ -d "$VOLTA_HOME" ]; then
   export PATH="$VOLTA_HOME/bin:$PATH"
 fi
 
+BUN_HOME="$HOME/.bun"
+if [ -d $BUN_HOME/bin ]; then
+  export PATH="$BUN_HOME/bin:$PATH"
+fi
+
 # load nvm
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
